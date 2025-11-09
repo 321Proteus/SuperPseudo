@@ -2,6 +2,11 @@
   "IDAMetadataDescriptorVersion": 1,
   "plugin": {
     "name": "Super Pseudo",
-    "entryPoint": "main.py"
+    "entryPoint": "main.py",
+    "categories": ["decompilation"],
+    "logoPath": "logo.png",
+    "idaVersions": ">=9.0",
+    "description": "Super Pseudo is a plugin that recursively inlines function calls in decompiled pseudocode to enhance code readability and analysis.",
+    "version": "1.0.0"
   }
 }
