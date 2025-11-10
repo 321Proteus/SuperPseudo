@@ -12,6 +12,8 @@ Super Pseudo is an IDA Pro plugin that leverages the Hex-Rays decompiler to recu
 - **Cycle Detection**: Prevents infinite recursion by tracking visited functions
 - **Configurable Depth**: Control inlining depth (default: 3 levels)
 - **AST-Based Analysis**: Uses Hex-Rays ctree visitor for accurate function call detection
+  
+![gif](./gif.gif)
 
 ## Requirements
 
