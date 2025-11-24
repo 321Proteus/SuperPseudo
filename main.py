@@ -9,7 +9,7 @@ import ida_hexrays
 
 # Import the plugin implementation
 from super_pseudo import SuperPseudoActionHandler, SuperPseudoGenerator
-
+from blacklist import ToggleActionHandler
 
 class PseudocodePopupHooks(ida_kernwin.UI_Hooks):
     """Hooks to add our action to the pseudocode context menu"""
@@ -27,6 +27,13 @@ class PseudocodePopupHooks(ida_kernwin.UI_Hooks):
                 widget,
                 popup,
                 'superpseudo:inline',
+                'Super Pseudo/',
+                ida_kernwin.SETMENU_APP
+            )
+            ida_kernwin.attach_action_to_popup(
+                widget,
+                popup,
+                'superpseudo:toggle',
                 'Super Pseudo/',
                 ida_kernwin.SETMENU_APP
             )
@@ -64,9 +71,21 @@ class SuperPseudoPlugin(ida_idaapi.plugin_t):
             -1
         )
 
-        if not ida_kernwin.register_action(action_desc):
-            print("[Super Pseudo] Failed to register action")
-            return ida_idaapi.PLUGIN_SKIP
+        toggle_action_desc = ida_kernwin.action_desc_t(
+            "superpseudo:toggle",
+            'Super Pseudo: Toggle Inline Block',
+            ToggleActionHandler(),
+            'Ctrl-Shift-J',
+            'Select whether the function should be inlined or not',
+            -1
+        )
+
+        commands = [action_desc, toggle_action_desc]
+
+        for command in commands:
+            if not ida_kernwin.register_action(command):
+                print("[Super Pseudo] Failed to register command")
+                return ida_idaapi.PLUGIN_SKIP
 
         # Install UI hooks to add menu item to pseudocode popup
         if self.hooks is None:
